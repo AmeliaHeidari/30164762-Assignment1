@@ -20,3 +20,26 @@ int main() {
 	for (int i = 0; i < ROWS; ++i) 
 		for (int j = 0; j < COLS; ++j)
 			scanf("%d", &matrix[i][j]);
+
+	pid_t pids[ROWS]; // storing all the kids PID's here 
+	int status;
+	int treasure_row = -1, treasure_col = -1; // this is where the treasure is found
+
+	for (int i = 0; i < ROWS; ++i) { // creating child processes (100) for the matrix
+		pid_t pid = fork();
+		if (pid == 0) {
+			printf("Child %d (PID %d): Searching row %d\n", i, getpid(), i);
+			for (int j = 0; j < COLS; ++j) { 
+				if (matrix[i][j] == 1) {
+					// if the treasure is found then it exits 
+					exit(j); // column number 
+				}
+			}
+			exit(255); // if nothing was found
+			} else if (pid > 0) {
+				pids[i] = pid; // storing PID for later
+			} else {
+				perror("fork failed"); // if it fails
+				exit(1);
+			}
+	}
