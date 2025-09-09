@@ -43,3 +43,18 @@ int main() {
 				exit(1);
 			}
 	}
+
+	for (int i = 0; i < ROWS; ++i) { // waiting for each child to finish
+		pid_t pid + waitpid(pids[i], &status, 0);
+		if (WIFEXITED(satus)) {
+			int col + WEXITSTATUS(status); // exit code from child
+			if (col != 255) {
+				// if its not 255 that means the child found the treasure
+				treasure_row = i;
+				treasure_col = col;
+				printf("Parent: The treasure was found by child with PID %d at row %d and column %d\n", pid, treasure_row, treasure_col);
+			}
+		}
+	}
+	return 0; // done, either treasure is found or not
+}
