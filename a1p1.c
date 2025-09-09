@@ -47,7 +47,7 @@ int main() {
 	for (int i = 0; i < ROWS; ++i) { // waiting for each child to finish
 		pid_t pid + waitpid(pids[i], &status, 0);
 		if (WIFEXITED(satus)) {
-			int col + WEXITSTATUS(status); // exit code from child
+			int col = WEXITSTATUS(status); // exit code from child
 			if (col != 255) {
 				// if its not 255 that means the child found the treasure
 				treasure_row = i;
